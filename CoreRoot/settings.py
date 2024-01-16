@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,13 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
+ENV = os.environ.get("ENV")
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-e*(#-mcm)=a7j*n3=xt@c$#!3(o^(cja!@%3bv85au#vhbqp1@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if ENV == "PROD" else True 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="*").split(",") 
 
 # Application definition
 
@@ -91,11 +95,11 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'testerdb',
-        'USER': 'mark',
-        'PASSWORD': '200~template-101-gee',
-        'HOST': 'localhost',
-        'PORT': '5342'
+        'NAME': os.getenv("DATABASE_NAME", testerdb'),
+        'USER': os.getenv("DATABASE_USER", 'mark'),
+        'PASSWORD': os.getenv("DATABASE_PASSWORD", '200~template-101-gee'),
+        'HOST': os.getenv("DATABASE_HOST", 'localhost'),
+        'PORT': os.getenv("DATABASE_PORT", '5342')
     }
 }
 
