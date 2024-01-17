@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ENV = os.environ.get("ENV")
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e*(#-mcm)=a7j*n3=xt@c$#!3(o^(cja!@%3bv85au#vhbqp1@'
+SECRET_KEY = os.envrion.get("SECRET_KEY") 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if ENV == "PROD" else True 
@@ -94,7 +95,7 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.getenv("DATABASE_NAME", testerdb'),
+        'NAME': os.getenv("DATABASE_NAME", 'testerdb'),
         'USER': os.getenv("DATABASE_USER", 'mark'),
         'PASSWORD': os.getenv("DATABASE_PASSWORD", '200~template-101-gee'),
         'HOST': os.getenv("DATABASE_HOST", 'localhost'),
